@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  whatsapp_api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    volumes:
+      - app-data:/opt/app/data
+    ports:
+      - "31002:8000"
+
+volumes:
+  app-data:
