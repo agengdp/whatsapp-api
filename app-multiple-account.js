@@ -202,13 +202,58 @@ io.on("connection", function (socket) {
 
 // Send message
 app.post("/send-message", async (req, res) => {
-  console.log(req);
-
   const sender = req.body.sender;
   const number = phoneNumberFormatter(req.body.number);
   const message = req.body.message;
 
   const client = sessions.find((sess) => sess.id == sender)?.client;
+
+  // Make sure the sender is exists & ready
+  if (!client) {
+    return res.status(422).json({
+      status: false,
+      message: `The sender: ${sender} is not found!`,
+    });
+  }
+
+  /**
+   * Check if the number is already registered
+   * Copied from app.js
+   *
+   * Please check app.js for more validations example
+   * You can add the same here!
+   */
+  const isRegisteredNumber = await client.isRegisteredUser(number);
+
+  if (!isRegisteredNumber) {
+    return res.status(422).json({
+      status: false,
+      message: "The number is not registered",
+    });
+  }
+
+  client
+    .sendMessage(number, message)
+    .then((response) => {
+      res.status(200).json({
+        status: true,
+        response: response,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: false,
+        response: err,
+      });
+    });
+});
+
+// Send message
+app.post("/send-message-rand", async (req, res) => {
+  const number = phoneNumberFormatter(req.body.number);
+  const message = req.body.message;
+
+  const client = sessions[Math.floor(Math.random() * sessions.length)]?.client;
 
   // Make sure the sender is exists & ready
   if (!client) {

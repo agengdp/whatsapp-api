@@ -7,7 +7,7 @@
     "single": "node app.js",
     "single:dev": "nodemon app.js",
     "multiple": "node app-multiple-account.js",
-    "multiple:dev": "nodemon app.js",
+    "multiple:dev": "nodemon app-multiple-account.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
