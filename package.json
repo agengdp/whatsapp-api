@@ -24,11 +24,11 @@
     "express-validator": "^6.15.0",
     "http": "0.0.1-security",
     "mime-types": "^2.1.35",
-    "qrcode": "^1.5.1",
+    "qrcode": "^1.5.3",
     "socket.io": "2.3.0",
     "whatsapp-web.js": "latest"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.22"
   }
 }
